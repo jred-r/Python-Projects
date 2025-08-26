@@ -1,5 +1,6 @@
 from config import HOST_ADDRESS, HOST_PORT, QUEUE_SIZE, BUFFER_SIZE, TIME_OUT
 import socket
+from utils import parse_http_request, process_request
 
 class Server:
     def __init__(self):
@@ -19,15 +20,10 @@ class Server:
             req_bytes = client_socket.recv(BUFFER_SIZE)
             req_str: str = req_bytes.decode()
             headers = req_str.split('\r\n')
-            first_header = headers[0].split(' ')
-            method = first_header[0]
-            req_path = first_header[1]
-            print(f'Client addr {client_addr[0]}, method: {method}, path: {req_path}')
-
-            with open('static/index.html') as fin:
-                content = fin.read()
-            response = f"HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n{content}"
-            client_socket.sendall(response.encode())
+            http_req = parse_http_request(headers)
+            http_res = process_request(http_req)
+            print(f'Processed: {http_req.Method} from {client_addr[0]}:{client_addr[1]}')
+            client_socket.sendall(http_res.to_bytes())
             client_socket.close()
     
     def stop(self):
