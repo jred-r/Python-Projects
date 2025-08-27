@@ -5,3 +5,8 @@ description = "These are some projects that i work on in my spare time."
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = []
+
+[tool.uv.workspace]
+members = [
+    "simple-http-server",
+]

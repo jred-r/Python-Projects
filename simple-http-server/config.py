@@ -1,0 +1,15 @@
+HOST_ADDRESS = "127.0.0.1"
+HOST_PORT = 8080
+QUEUE_SIZE = 10
+BUFFER_SIZE = 1024
+TIME_OUT = 1
+PROTOCOL = "HTTP/1.1"
+SUPPORTED_METHODS: list[str] = {
+    "GET",
+    "POST",
+    "PUT",
+    "PATCH",
+    "DELETE",
+    "HEAD",
+    "OPTIONS",
+}
